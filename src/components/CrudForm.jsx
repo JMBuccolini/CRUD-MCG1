@@ -28,11 +28,19 @@ const CrudForm = ({createData, updateData, dataToEdit, setDataToEdit}) => {
 
     //Esta función se dispara cuando el usuario hace click en enviar
     const handleSubmit = (e) =>{
-        e.preventDefault();
+        e.preventDefault(); //prevenir el comportamiento por defecto para ejecutar primero la estructura de control
+        
+        const dataRegEx = /^[A-Z][a-z]+$/; //este patrón espera caracteres de la a a la z en mayúscula y en minúscula
+        
         if(!form.name || !form.lastname){
             alert("Datos incompletos");
             return;
         }
+        // Si esto: dataRegEx.test(form.name) me devuelve "false" significa que el usuario escribió caracteres inválidos
+        if(!dataRegEx.test(form.name) || !dataRegEx.test(form.lastname)){// !false = true
+            alert('Debes ingresar solamente letras y la primera debe ser mayúscula');
+            return;
+        } 
 
         if(form.id === null){
             createData(form);
